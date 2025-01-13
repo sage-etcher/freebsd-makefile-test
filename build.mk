@@ -11,12 +11,12 @@ $(DEPEND_MK): $(SRCS)
 	$(CC) -MM -MF $(DEPEND_MK) $(SRCS) $(CFLAGS)
 
 clean:
-	rm -f $(DEPEND_MK)
-	rm -f *.o
-	rm -f *.out
+	$(RM) $(DEPEND_MK)
+	$(RM) *.o
+	$(RM) *.out
 
 debug:
-	@echo "depend = '$(DEPEND_MK)'"
+	@echo "build debug:"
 
 # linkage
 test.out: depend $(OBJS)
@@ -24,7 +24,9 @@ test.out: depend $(OBJS)
 
 # compile
 %.o: %.c
+	@echo "building me"
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 
 # vim: noet
+# end of file

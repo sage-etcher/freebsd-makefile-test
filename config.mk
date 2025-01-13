@@ -11,8 +11,24 @@ LFLAGS := $(SDL2_LFLAGS) $(LFLAGS)
 CC = cc
 LD = cc
 
+RM = rm -f
+BEAR = bear --force-wrapper
+
 DEPEND_MK = .depend.mk
 BUILD_MK  = build.mk
 CONFIG_MK = config.mk
 
+debug:
+	@echo "  CC           $(CC)"
+	@echo "  LD           $(LD)"
+	@echo "  RM           $(RM)"
+	@echo "  BEAR         $(BEAR)"
+	@echo "  SRCS         $(SRCS)"
+	@echo "  OBJS         $(OBJS)"
+	@echo "  SDL2_CFLAGS  $(SDL2_CFLAGS)"
+	@echo "  SDL2_LFLAGS  $(SDL2_LFLAGS)"
+	@echo "  CFLAGS       $(CFLAGS)"
+	@echo "  LFLAGS       $(LFLAGS)"
+
 # vim: noet
+# end of file
