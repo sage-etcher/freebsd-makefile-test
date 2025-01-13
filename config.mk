@@ -13,12 +13,14 @@ LD = cc
 
 RM = rm -f
 BEAR = bear --force-wrapper
+BEAR_OUTPUT = compile_commands.json
 
 DEPEND_MK = .depend.mk
 BUILD_MK  = build.mk
 CONFIG_MK = config.mk
 
-debug:
+debug-config:
+	@echo "config.mk:"
 	@echo "  CC           $(CC)"
 	@echo "  LD           $(LD)"
 	@echo "  RM           $(RM)"
@@ -29,6 +31,7 @@ debug:
 	@echo "  SDL2_LFLAGS  $(SDL2_LFLAGS)"
 	@echo "  CFLAGS       $(CFLAGS)"
 	@echo "  LFLAGS       $(LFLAGS)"
+	@echo ""
 
 # vim: noet
 # end of file

@@ -4,22 +4,17 @@ include config.mk
 
 build: test.out
 
-depend: $(DEPEND_MK)
-	$(MAKE) -f $(DEPEND_MK)
-
-$(DEPEND_MK): $(SRCS)
-	$(CC) -MM -MF $(DEPEND_MK) $(SRCS) $(CFLAGS)
-
 clean:
-	$(RM) $(DEPEND_MK)
 	$(RM) *.o
 	$(RM) *.out
 
-debug:
-	@echo "build debug:"
+debug-build:
+	@echo "build.mk:"
+	@echo "  [nothing here]"
+	@echo ""
 
 # linkage
-test.out: depend $(OBJS)
+test.out: $(OBJS)
 	$(LD) -o $@ $(OBJS) $(LFLAGS)
 
 # compile
@@ -27,6 +22,12 @@ test.out: depend $(OBJS)
 	@echo "building me"
 	$(CC) $(CFLAGS) -c -o $@ $<
 
+
+# include DEPEND_MK if it exists, but dont worry if it doesn't
+DEPEND_EXIST != test $(DEPEND_MK) || echo "$?"
+.if $(DEPEND_EXIST)
+	include $(DEPEND_MK)
+.endif
 
 # vim: noet
 # end of file
