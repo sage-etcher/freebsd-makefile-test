@@ -8,6 +8,7 @@ main (int argc, char **argv)
 {
     my_app_t *app = NULL;
 
+
     app = app_alloc ();
     app_create_window (app, "my app", 640, 480);
     app_background_color (app, 0xffaabb, 0xff);

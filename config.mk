@@ -15,23 +15,11 @@ RM = rm -f
 BEAR = bear --force-wrapper
 BEAR_OUTPUT = compile_commands.json
 
-DEPEND_MK = .depend.mk
-BUILD_MK  = build.mk
+MAIN_MAKEFILE = makefile
 CONFIG_MK = config.mk
+BUILD_MK  = build.mk
+DEPEND_MK = .depend.mk
 
-debug-config:
-	@echo "config.mk:"
-	@echo "  CC           $(CC)"
-	@echo "  LD           $(LD)"
-	@echo "  RM           $(RM)"
-	@echo "  BEAR         $(BEAR)"
-	@echo "  SRCS         $(SRCS)"
-	@echo "  OBJS         $(OBJS)"
-	@echo "  SDL2_CFLAGS  $(SDL2_CFLAGS)"
-	@echo "  SDL2_LFLAGS  $(SDL2_LFLAGS)"
-	@echo "  CFLAGS       $(CFLAGS)"
-	@echo "  LFLAGS       $(LFLAGS)"
-	@echo ""
 
 # vim: noet
 # end of file
