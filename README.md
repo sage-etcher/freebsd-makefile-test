@@ -22,6 +22,12 @@ FreeBSD Make, **NOT** GNU Make or POSIX Make.
 | `fullclean` | remove all generated files.       |
 | `debug`     | print makefile variables.         |
 
+## Dependencies
+
+ - bear
+ - pkgconfig
+ - libSDL2-devel
+
 ## License
 
 BSD 2-Clause License.  
