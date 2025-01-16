@@ -12,7 +12,7 @@ typedef struct my_app
     SDL_Renderer *rend;
     SDL_Rect size;
     SDL_Color bg;
-    int should_quit;
+    int should_exit;
 } my_app_t;
 
 
@@ -20,16 +20,31 @@ static SDL_Color hex_to_color (uint32_t hex, uint8_t alpha);
 
 
 int
-app_should_quit (my_app_t *app)
+app_init (void)
 {
-    return app->should_quit;
+    const int SDL_FLAGS = SDL_INIT_EVENTS | SDL_INIT_VIDEO;
+    return SDL_Init (SDL_FLAGS);
 }
 
 
 void
-app_quit (my_app_t *app)
+app_quit (void)
 {
-    app->should_quit = 1;
+    SDL_Quit ();
+}
+
+
+int
+app_should_exit (my_app_t *app)
+{
+    return app->should_exit;
+}
+
+
+void
+app_exit (my_app_t *app)
+{
+    app->should_exit = 1;
     return;
 }
 
@@ -64,13 +79,13 @@ app_alloc (void)
 int
 app_create_window (my_app_t *app, char *title, int w, int h)
 {
-    const int win_flags = SDL_WINDOW_RESIZEABLE;
-    const int rend_flags = SDL_RENDERER_ACCEL | SDL_RENDERER_VSYNC;
+    const int win_flags = SDL_WINDOW_RESIZABLE;
+    const int rend_flags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC;
 
-    const int auto_pos = SDL_DEFAULT_POS;
+    const int auto_pos = SDL_WINDOWPOS_UNDEFINED;
 
     app->win = SDL_CreateWindow (title, auto_pos, auto_pos, w, h, win_flags);
-    app->rend = SDL_CreateRenderer (app->win, -1, rend_flags);
+    app->rend = SDL_CreateRenderer (app->win, 0, rend_flags);
 
     if ((!app->win) || (!app->rend))
     {
@@ -99,12 +114,11 @@ static SDL_Color
 hex_to_color (uint32_t hex, uint8_t alpha)
 {
     /* hex to rgba */
-    SDL_Color color = {
-        .r = ((hex & 0x00FF0000) >> (2*8)),
-        .g = ((hex & 0x0000FF00) >> (1*8)),
-        .b = ((hex & 0x000000FF) >> (0*8)),
-        .a = alpha,
-    };
+    SDL_Color color = { 0 };
+    color.r = ((hex & 0x00FF0000) >> (2*8));
+    color.g = ((hex & 0x0000FF00) >> (1*8));
+    color.b = ((hex & 0x000000FF) >> (0*8));
+    color.a = alpha;
 
     return color;
 }
@@ -113,8 +127,15 @@ hex_to_color (uint32_t hex, uint8_t alpha)
 void
 app_draw_background (my_app_t *app)
 {
-    SDL_SetDrawColor (app->rend, app->bg.r, app->bg.g, app->bg.b, app->bg.a);
+    SDL_SetRenderDrawColor (app->rend, app->bg.r, app->bg.g, app->bg.b, app->bg.a);
     SDL_RenderClear (app->rend);
+    return;
+}
+
+void 
+app_present (my_app_t *app)
+{
+    SDL_RenderPresent (app->rend);
     return;
 }
 
@@ -137,7 +158,7 @@ app_handle_events (my_app_t *app)
         switch (e.type)
         {
         case SDL_QUIT:
-            app_quit (app);
+            app_exit (app);
             return;
         }
     }
