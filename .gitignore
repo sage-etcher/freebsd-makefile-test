@@ -1,6 +1,7 @@
 .cache/
 compile_commands.json
 .depend.mk
+*.orig
 *.o
 *.d
 *.out

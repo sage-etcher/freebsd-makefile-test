@@ -14,7 +14,7 @@ debug-build:
 	@echo ""
 
 # linkage
-test.out: $(OBJS)
+test.out: $(OBJS) $(BUILD_MAKEFILE_LIST)
 	$(LD) -o $@ $(OBJS) $(LFLAGS)
 
 # compile

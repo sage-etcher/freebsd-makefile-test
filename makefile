@@ -1,10 +1,9 @@
 
 include config.mk
 
-
 # build + track
 build: depend
-	$(MAKE) -f $(BUILD_MK) $@
+	@$(MAKE) -f $(BUILD_MK) $@
 
 depend: $(DEPEND_MK)
 
@@ -15,7 +14,7 @@ $(DEPEND_MK): $(SRCS)
 # clean
 clean:
 	$(RM) $(DEPEND_MK)
-	$(MAKE) -f $(BUILD_MK) $@
+	@$(MAKE) -f $(BUILD_MK) $@
 
 fullclean: clean
 	$(RM) $(BEAR_OUTPUT)
@@ -30,12 +29,10 @@ uninstall:
 
 
 # bear
-BUILD_MAKEFILE_LIST = $(MAIN_MAKEFILE) $(BUILD_MK) $(CONFIG_MK)
-
 bear: $(BEAR_OUTPUT)
 
 $(BEAR_OUTPUT): $(SRCS) $(BUILD_MAKEFILE_LIST)
-	$(MAKE) -f $(BUILD_MK) clean
+	@$(MAKE) -f $(BUILD_MK) clean
 	$(BEAR) -- $(MAKE) -f $(MAIN_MAKEFILE) build
 
 
@@ -56,7 +53,7 @@ debug-variables:
 	@echo ""
 
 debug-build:
-	$(MAKE) -f $(BUILD_MK) debug-build
+	@$(MAKE) -f $(BUILD_MK) debug-build
 
 debug: debug-variables debug-build
 
